@@ -1,0 +1,6 @@
+@pr5_HostAddress = http://localhost:5226
+
+GET {{pr5_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

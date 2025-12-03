@@ -8,5 +8,7 @@ namespace pr5.Models.DTO
         public string Password { get; set; }
         public string Token { get; set; }
         public IPAddress UserIp { get; set; }
+        public DateTime ConnectionStart { get; set; }
+        public string ConnectionId { get; set; }
     }
 }

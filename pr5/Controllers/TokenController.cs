@@ -18,7 +18,18 @@ namespace pr5.Controllers
         [HttpPost]
         public async Task<IActionResult> Connect(UserCredentials userCredentials)
         {
-            _tokenService.Connect(userCredentials);
+            var token = _tokenService.Connect(userCredentials);
+            return Ok();
+        }
+        public async Task<IActionResult> GetConnectionInfo(string login, string token)
+        {
+            var connInfo = _tokenService.GetConnectionInfo(login, token);
+            return Ok(connInfo);
+        }
+        public async Task<IActionResult> Disconnect(string login, string token)
+        {
+            _tokenService.Disconnect(login, token);
+            return Ok();
         }
     }
 }

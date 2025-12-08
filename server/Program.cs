@@ -2,16 +2,6 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Sockets;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 IPAddress ServerIpAddress;
 int ServerPort;
@@ -154,8 +144,7 @@ string SetCommandClient(string message)
             }
             break;
         default:
-            //Classes.Client Client = AllClients.Find(x => x.Token == message);
-            return "/connect";//Client != null ? "/connect" : "/dissconnect";
+            return AllClients.Any(x => x.Token == message) ? "/connect" : "/disconnect";
     }
 }
 void SetCommand()
@@ -168,7 +157,7 @@ void SetCommand()
         File.Delete(Directory.GetCurrentDirectory() + "/.config");
         OnSettings();
     }
-    else if (Command.Contains("/dissconnect")) DisconnectServer(mes[1]);
+    else if (Command.Contains("/disconnect")) DisconnectServer(mes[1]);
     else if (Command == "/status") GetStatus();
     else if (Command == "/help") Help();
     else if (Command == "/block")
@@ -180,10 +169,12 @@ void SetCommand()
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine("Client not found");
+                return;
             }
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("Blocked");
             client.Blocked = true;
+            DisconnectServer(mes[1]);
             con.SaveChanges();
         }
     }
